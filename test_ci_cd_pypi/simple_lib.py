@@ -8,6 +8,21 @@ from stdnum import isin, lei
 from stdnum.gb import sedol
 
 
+def get_ids_to_validate():
+    """
+        This function defines the type of patterns that can be used to name attributes related to official ids.
+        The main idea is to identify automatically all the attributes in which official ids validation can be applied.
+
+        Parameters:
+
+        Returns:
+            pattern (list): all pattern names used to identify attributes in which the id validation can be applied
+        Raises:
+            No exception is raised.
+    """
+    return ['isin', 'lei', 'sedol']
+
+
 def validate_id(value, type_id='isin'):
     """
         Validates an official id. By default, the id type is isin.
