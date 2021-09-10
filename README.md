@@ -9,7 +9,7 @@ Install using pip:
 
 ## Usage
 
-See the jupyter notebook guide below:
+The two jupyter notebooks below give an overview on how to use the library:
 
-- [How to normalize country information](notebooks/Normalize%20country%20information.ipynb)
-- [How to validate banking ids, such as: LEI, ISIN and SEDOL](notebooks/Validate%20banking%20IDs.ipynb)
+- [How to normalize country information](https://github.com/patryciabp/test-ci-cd-pypi/blob/main/notebooks/Normalize%20country%20information.ipynb)
+- [How to validate banking ids, such as: LEI, ISIN and SEDOL](https://github.com/patryciabp/test-ci-cd-pypi/blob/main/notebooks/Validate%20banking%20IDs.ipynb)
