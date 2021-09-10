@@ -38,6 +38,9 @@ exclude = '''
 )\
 '''
 
+[tool.poetry.scripts]
+test = 'scripts:test'
+
 [tool.poetry.dependencies]
 python = "^3.8"
 numpy = "^1.21.2"
