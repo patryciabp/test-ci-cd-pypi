@@ -1,19 +1,15 @@
-# This is a basic workflow to help you get started with Actions
-
-name: Build on push-pull_request
-
-# Controls when the workflow will run
 on:
-  # Triggers the workflow on push or pull request events but only for the main branch
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
-    branches: [ main ]
+    branches: [main]
 
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
+name: Build
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+defaults:
+  run:
+    shell: bash
+
 jobs:
   black-formatting-check:
     name: Check formatting
@@ -23,7 +19,6 @@ jobs:
       - uses: actions/setup-python@v2.2.2
       - uses: psf/black@stable
   build:
-    # The type of runner that the job will run on
     name: Build tool
     runs-on: ${{ matrix.os }}
     needs: black-formatting-check
@@ -39,15 +34,28 @@ jobs:
           - '3.9'
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v2.3.4
       - name: Setup Python
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v2.2.2
         with:
           python-version: ${{matrix.python-version}}
-      - name: Install Poetry
-        run: curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python
-      - name: Add Poetry to path
-        run: echo "${HOME}/.poetry/bin" >> $GITHUB_PATH
+      # Perma-cache Poetry since we only need it for checking pyproject version
+      - name: Cache Poetry
+        id: cache-poetry
+        uses: actions/cache@v2.1.6
+        with:
+          path: ~/.poetry
+          key: ${{ matrix.os }}-poetry
+      # Only runs when key from caching step changes
+      - name: Install latest version of Poetry
+        if: steps.cache-poetry.outputs.cache-hit != 'true'
+        run: |
+          curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python -
+      # Poetry still needs to be re-prepended to the PATH on each run, since
+      # PATH does not persist between runs.
+      - name: Add Poetry to $PATH
+        run: |
+          echo "$HOME/.poetry/bin" >> $GITHUB_PATH
       - name: Get Poetry version
         run: poetry --version
       - name: Check pyproject.toml validity
@@ -64,7 +72,7 @@ jobs:
         run: |
           poetry config virtualenvs.in-project true
           poetry install --no-interaction
-      - name: Run a test script
-        run: poetry run test
+      - name: Run tests
+        run: poetry run pytest -v
       - name: Build artifacts
         run: poetry build
