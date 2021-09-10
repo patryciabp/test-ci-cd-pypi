@@ -1,11 +1,12 @@
 # test-ci-cd-pypi
-Simple library to test the automatic packaging and publication into the PyPi environment
+
+Simple library to test CI/CD with GitHub Actions and Poetry.
 
 ## Installation
 
 Install using pip:
     
-    pip install test-ci.cd.pypi
+    pip install test-ci-cd.pypi
 
 ## Usage
 

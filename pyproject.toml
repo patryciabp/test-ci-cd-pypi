@@ -1,16 +1,42 @@
 [tool.poetry]
 name = "test_ci_cd_pypi"
 version = "0.1.0"
-description = "Simple library to test the automatic packaging and publication into the PyPi environment"
+description = "Simple library to test CI/CD with GitHub Actions and Poetry"
 authors = ["Patrycia Barros Pereira <patryciabp@gmail.com>"]
 license = "Apache 2"
 readme = "README.md"
 homepage = "https://github.com/patryciabp/test-ci-cd-pypi"
 repository = "https://github.com/patryciabp/test-ci-cd-pypi"
+keywords = ["ci", "cd", "github actions", "poetry"]
+
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "License :: OSI Approved :: Apache Software License",
+    "Intended Audience :: Developers",
+    "Operating System :: Microsoft :: Windows",
+    "Operating System :: MacOS",
+    "Operating System :: POSIX :: Linux",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9"
+]
 
 include = [
     "LICENSE.md",
 ]
+
+[tool.black]
+exclude = '''
+/(
+    \.eggs
+  | \.git
+  | \.venv
+  | \.env
+  | build
+  | dist
+  | \.mypy_cache
+)\
+'''
 
 [tool.poetry.dependencies]
 python = "^3.8"
@@ -20,6 +46,8 @@ python-stdnum = "^1.16"
 
 [tool.poetry.dev-dependencies]
 pytest = "^6.2.5"
+black = "^21.8b0"
+pre-commit = "^2.15.0"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
