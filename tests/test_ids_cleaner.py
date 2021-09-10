@@ -1,7 +1,7 @@
 import unittest
 
 from test_ci_cd_pypi import simple_lib
-import test_data_reader
+from tests import test_data_reader
 
 # Test data from csv excel files
 # - column_0: official id to be validated
