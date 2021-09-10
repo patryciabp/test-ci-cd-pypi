@@ -7,7 +7,7 @@ import test_data_reader
 # - column_0: official id to be validated
 # - column_1: type official id ('isin', 'lei', 'sedol', 'other')
 # - column_2: expected result from validation (True, False, NotImplemented)
-test_data_filename = 'sample_data/test_cleaner_ids.csv'
+test_data_filename = "sample_data/test_cleaner_ids.csv"
 
 # Data for processing as lists
 test_ids_rows = []
@@ -19,7 +19,7 @@ def load_test_data():
 
     # Read input and output data files
     test_data_reader.read_test_file(test_data_filename, test_ids_rows)
-    print('Test data loaded from {}'.format(test_data_filename))
+    print("Test data loaded from {}".format(test_data_filename))
 
 
 class TestOfficialIdCleaner(unittest.TestCase):
@@ -36,7 +36,7 @@ class TestOfficialIdCleaner(unittest.TestCase):
     # Validate country's info
     def test_validate_ids(self):
         total_rows = len(test_ids_rows)
-        print('Total cases to tests {}'.format(total_rows))
+        print("Total cases to tests {}".format(total_rows))
         for data in test_ids_rows:
             # The first column is the input data
             id_to_validate = data[0].strip().lower()
@@ -50,7 +50,7 @@ class TestOfficialIdCleaner(unittest.TestCase):
             # The third column is the expected result
             expected_result = data[2].strip().lower()
             print(id_to_validate, id_type)
-            if expected_result == 'true' or expected_result == 'false':
+            if expected_result == "true" or expected_result == "false":
                 expected_result = bool(expected_result)
                 self.assertEqual(result_validation, expected_result)
 
@@ -58,7 +58,7 @@ class TestOfficialIdCleaner(unittest.TestCase):
 def build_test_suite():
     # Create a pool of tests
     test_suite = unittest.TestSuite()
-    test_suite.addTest(TestOfficialIdCleaner('test_validate_ids'))
+    test_suite.addTest(TestOfficialIdCleaner("test_validate_ids"))
     return test_suite
 
 
@@ -69,5 +69,5 @@ def build_text_report():
     test_runner.run(test_suite)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     build_text_report()

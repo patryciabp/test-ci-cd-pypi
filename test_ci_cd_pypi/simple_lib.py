@@ -10,31 +10,31 @@ from stdnum.gb import sedol
 
 def get_ids_to_validate():
     """
-        This function defines the type of patterns that can be used to name attributes related to official ids.
-        The main idea is to identify automatically all the attributes in which official ids validation can be applied.
+    This function defines the type of patterns that can be used to name attributes related to official ids.
+    The main idea is to identify automatically all the attributes in which official ids validation can be applied.
 
-        Parameters:
+    Parameters:
 
-        Returns:
-            pattern (list): all pattern names used to identify attributes in which the id validation can be applied
-        Raises:
-            No exception is raised.
+    Returns:
+        pattern (list): all pattern names used to identify attributes in which the id validation can be applied
+    Raises:
+        No exception is raised.
     """
-    return ['isin', 'lei', 'sedol']
+    return ["isin", "lei", "sedol"]
 
 
-def validate_id(value, type_id='isin'):
+def validate_id(value, type_id="isin"):
     """
-        Validates an official id. By default, the id type is isin.
+    Validates an official id. By default, the id type is isin.
 
-        Parameters:
-            value (string): the id to be validated
-            type_id (string): defines the type of the identifier to be validated ('lei', 'isin' or 'sedol')
-        Returns:
-            np.nan : if the value is not a string, is null or have zero length
-            True or False: the validity of the identifier
-        Raises:
-            NotImplementedError: if the type_id is not recognizable
+    Parameters:
+        value (string): the id to be validated
+        type_id (string): defines the type of the identifier to be validated ('lei', 'isin' or 'sedol')
+    Returns:
+        np.nan : if the value is not a string, is null or have zero length
+        True or False: the validity of the identifier
+    Raises:
+        NotImplementedError: if the type_id is not recognizable
     """
 
     if not isinstance(value, str):
@@ -47,13 +47,13 @@ def validate_id(value, type_id='isin'):
     value = value.strip().lower()
 
     # Remove excessive spaces in between words
-    value = re.sub(r'\s+', ' ', value)
+    value = re.sub(r"\s+", " ", value)
 
-    if type_id == 'lei':
+    if type_id == "lei":
         return lei.is_valid(value)
-    elif type_id == 'isin':
+    elif type_id == "isin":
         return isin.is_valid(value)
-    elif type_id == 'sedol':
+    elif type_id == "sedol":
         return sedol.is_valid(value)
     else:
         raise NotImplementedError
@@ -61,15 +61,15 @@ def validate_id(value, type_id='isin'):
 
 def get_name_from_alpha2(country):
     """
-        Gets the name of a country given its alpha2 code.
+    Gets the name of a country given its alpha2 code.
 
-        Parameters:
-            country (string): the alpha2 code
-        Returns:
-            NaN (np.nan): if the alpha code was not found
-            country_name (string): the name of the country
-        Raises:
-            No exception is raised.
+    Parameters:
+        country (string): the alpha2 code
+    Returns:
+        NaN (np.nan): if the alpha code was not found
+        country_name (string): the name of the country
+    Raises:
+        No exception is raised.
     """
 
     country_name = Country.get_country_name_from_iso2(country, use_live=False)
