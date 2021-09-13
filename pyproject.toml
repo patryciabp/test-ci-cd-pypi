@@ -1,6 +1,5 @@
 [tool.poetry]
 name = "test_ci_cd_pypi"
-version = "0.8.0"
 description = "Simple library to test CI/CD with GitHub Actions and Poetry"
 authors = ["Patrycia Barros Pereira <patryciabp@gmail.com>"]
 license = "Apache 2"
@@ -38,6 +37,11 @@ exclude = '''
 )\
 '''
 
+[tool.poetry-dynamic-versioning]
+enable = true
+vcs = "git"
+pattern = "^v(?P<base>\\d+(\\.\\d+)*)"
+
 [tool.poetry.scripts]
 test = 'scripts:test'
 
@@ -53,5 +57,5 @@ black = "^21.8b0"
 pre-commit = "^2.15.0"
 
 [build-system]
-requires = ["poetry-core>=1.0.0"]
+requires = ["poetry-core>=1.0.0", "poetry-dynamic-versioning"]
 build-backend = "poetry.core.masonry.api"
