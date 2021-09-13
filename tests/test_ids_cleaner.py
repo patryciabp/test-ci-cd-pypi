@@ -7,7 +7,7 @@ from tests import test_data_reader
 # - column_0: official id to be validated
 # - column_1: type official id ('isin', 'lei', 'sedol', 'other')
 # - column_2: expected result from validation (True, False, NotImplemented)
-test_data_filename = "sample_data/test_cleaner_ids.csv"
+test_data_filename = "tests/data/test_cleaner_ids.csv"
 
 # Data for processing as lists
 test_ids_rows = []
