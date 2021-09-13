@@ -78,6 +78,6 @@ jobs:
       - name: Setup PyPi Test
         run: |
           poetry config repositories.testpypi https://test.pypi.org/legacy/
-          poetry config pypi-token.testpypi ${{ secrets.TEST_PYPI_TOKEN }}
+          poetry config pypi-token.testpypi ${{ secrets.PYPI_TEST_TOKEN }}
       - name: Publish package
         run: poetry publish --build -r testpypi
