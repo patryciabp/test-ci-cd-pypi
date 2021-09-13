@@ -3,7 +3,7 @@ on:
     types:
       - published
 
-name: PyPI Publish
+name: Create Release
 
 jobs:
   publish:
