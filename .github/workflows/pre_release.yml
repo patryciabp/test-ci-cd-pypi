@@ -42,7 +42,6 @@ jobs:
           echo $TAG
           echo $PROJECT_VERSION
           if [[ "$TAG" != "v$PROJECT_VERSION" ]]; then exit 1; fi
-
       - name: Get Poetry version
         run: poetry --version
       - name: Check pyproject.toml validity
