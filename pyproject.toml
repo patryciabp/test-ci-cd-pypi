@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "test_ci_cd_pypi"
-version = "0.14.0"
+version = "0.15.0"
 description = "Simple library to test CI/CD with GitHub Actions and Poetry"
 authors = ["Patrycia Barros Pereira <patryciabp@gmail.com>"]
 license = "Apache 2"
