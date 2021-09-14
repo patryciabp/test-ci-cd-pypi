@@ -1,6 +1,6 @@
 on:
   push:
-    # Sequence of patterns matched against refs/tags
+# Sequence of patterns matched against refs/tags
     tags:
       - 'v*' # Push events to matching v*, i.e. v1.0, v20.15.10
 
@@ -19,7 +19,7 @@ jobs:
         uses: actions/setup-python@v2.2.2
         with:
           python-version: '3.8'
-      - name: Permacache Poetry
+      - name: Cache Poetry
         id: cache-poetry
         uses: actions/cache@v2.1.6
         with:
@@ -27,19 +27,17 @@ jobs:
           key: poetry
       - name: Install latest version of Poetry
         if: steps.cache-poetry.outputs.cache-hit != 'true'
-        run: |
-          curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python -
-      - name: Add Poetry to $PATH
-        run: |
-          echo "$HOME/.poetry/bin" >> $GITHUB_PATH
+        uses: snok/install-poetry@v1
       - name: Add version to environment vars
         run: |
           PROJECT_VERSION=$(poetry version --short)
           echo "PROJECT_VERSION=$PROJECT_VERSION" >> $GITHUB_ENV
-      - name: Get Poetry version
-        run: poetry --version
-      - name: Check pyproject.toml validity
-        run: poetry check --no-interaction
+      - name: Check if tag version matches project version
+        run: |
+          TAG=$(git describe HEAD --tags --abbrev=0)
+          echo $TAG
+          echo $PROJECT_VERSION
+          if [[ "$TAG" != "v$PROJECT_VERSION" ]]; then exit 1;
       - name: Cache dependencies
         id: cache-deps
         uses: actions/cache@v2.1.6
@@ -56,9 +54,8 @@ jobs:
         run: poetry run test
       - name: Build
         run: poetry build
-      - name: Setup PyPi Test
+      - name: Publish in PyPi Test
         run: |
           poetry config repositories.testpypi https://test.pypi.org/legacy/
           poetry config pypi-token.testpypi ${{ secrets.PYPI_TEST_TOKEN }}
-      - name: Publish package
-        run: poetry publish -r testpypi
+          poetry publish -r testpypi
