@@ -1,0 +1,16 @@
+on:
+  workflow_dispatch:
+
+name: Test OS-C Tokens
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    environment: production_environment
+    steps:
+      - name: Test secrets
+        env:
+          PYPI_TEST_TOKEN: ${{ secrets.PYPI_TEST_TOKEN }}
+        run: |
+          echo 'The GitHub Action Secret will be masked: '
+          echo $PYPI_TEST_TOKEN
